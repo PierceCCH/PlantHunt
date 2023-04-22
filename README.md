@@ -1,3 +1,7 @@
+## Prerequisites
+Node.js v15.5.0
+Expo GO app
+
 ## How to compile and run
 
 1. Run `yarn` or `npm install`
