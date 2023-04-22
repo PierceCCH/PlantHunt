@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { View, Image, Text, TouchableOpacity, ScrollView } from "react-native";
+import { View, Button, Image, Text, TouchableOpacity, ScrollView } from "react-native";
 import tailwind from "tailwind-rn";
 import Svg, { Path } from "react-native-svg";
 import * as ImageManipulator from "expo-image-manipulator";
@@ -10,11 +10,12 @@ import { decodeJpeg } from "@tensorflow/tfjs-react-native";
 import { Camera } from "expo-camera";
 import { WIDTH } from "./constants";
 import { ModelContext } from "./ModelContext";
+// import { Button } from "react-native-web";
 
-export default function Home() {
+export default function Home({navigation}) {
   // COMPONENT VARIABLES
   const [photo, setPhoto] = useState();
-  const [status, setStatus] = useState("Pick an image");
+  const [status, setStatus] = useState("Waiting for image...");
   const [results, setResults] = useState([]);
   const { model, loading } = useContext(ModelContext);
 
@@ -32,7 +33,7 @@ export default function Home() {
 
   useEffect(() => {
     const init = async () => {
-      const { status } = await Camera.requestPermissionsAsync();
+      const { status } = await Camera.requestCameraPermissionsAsync();
       setCamPermitted(status === "granted");
     };
     init();
@@ -50,7 +51,7 @@ export default function Home() {
 
       predict();
     } else {
-      setStatus("Pick an image");
+      setStatus("Waiting for image...");
     }
   }, [photo]);
 
@@ -138,7 +139,9 @@ export default function Home() {
 
       {/* Content */}
       <View style={tailwind("flex flex-1")}>
-        <View style={[tailwind("flex p-2"), { width: WIDTH, height: WIDTH }]}>
+        <View
+          style={[tailwind("flex p-2 mt-24"), { width: WIDTH, height: WIDTH }]}
+        >
           {photo ? (
             <Image
               style={tailwind(`${bgAccent} flex flex-1 rounded-xl`)}
@@ -308,27 +311,25 @@ export default function Home() {
             </View>
           </View>
 
-          <View style={tailwind(`flex flex-row py-2 rounded`)}>
+          <View
+            style={tailwind(
+              `flex flex-row justify-center py-2 rounded`
+            )}
+          >
             <Text
               style={tailwind(
-                `flex w-1/2 text-center border-r border-gray-400 font-bold ${textColor}`
+                `flex content-center text-center border-r border-gray-400 font-bold ${textColor}`
               )}
             >
               Classname
             </Text>
-            <Text
-              style={tailwind(`flex w-1/2 text-center font-bold ${textColor}`)}
-            >
-              Probability
-            </Text>
           </View>
 
           {results
-            ? results.map(({ className, probability }, idx) => (
+            ? results.map(({ className }, idx) => (
                 <ResultItem
                   key={`result-${idx}`}
                   name={className}
-                  probability={probability}
                   //   color={idx % 2 === 0 ? "bg-red-300" : "bg-green-300"}
                   color={bgAccent}
                   textColor={textAccent}
@@ -336,7 +337,14 @@ export default function Home() {
               ))
             : console.log(results)}
 
-          <View style={tailwind("flex h-6")} />
+          <View style={tailwind("flex h-6  items-center border-solid")} />
+          <View
+            style={tailwind(
+              "bg-green-900 w-1/2 text-center text-white items-center justify-center font-bold py-2 px-4 rounded-full"
+            )}
+          >
+            <Button title="Log" color="#ffffff" onPress={() => console.log("h")}></Button>
+          </View>
         </ScrollView>
       </View>
     </View>
