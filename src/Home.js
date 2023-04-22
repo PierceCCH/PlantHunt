@@ -1,11 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import {
-  View,
-  Image,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import { View, Image, Text, TouchableOpacity, ScrollView } from "react-native";
 import tailwind from "tailwind-rn";
 import Svg, { Path } from "react-native-svg";
 import * as ImageManipulator from "expo-image-manipulator";
@@ -143,9 +137,7 @@ export default function Home() {
       {/* Header */}
 
       {/* Content */}
-      <View
-        style={tailwind("flex flex-1")}
-      >
+      <View style={tailwind("flex flex-1")}>
         <View style={[tailwind("flex p-2"), { width: WIDTH, height: WIDTH }]}>
           {photo ? (
             <Image
@@ -331,16 +323,18 @@ export default function Home() {
             </Text>
           </View>
 
-          {results.map(({ className, probability }, idx) => (
-            <ResultItem
-              key={`result-${idx}`}
-              name={className}
-              probability={probability}
-              //   color={idx % 2 === 0 ? "bg-red-300" : "bg-green-300"}
-              color={bgAccent}
-              textColor={textAccent}
-            />
-          ))}
+          {results
+            ? results.map(({ className, probability }, idx) => (
+                <ResultItem
+                  key={`result-${idx}`}
+                  name={className}
+                  probability={probability}
+                  //   color={idx % 2 === 0 ? "bg-red-300" : "bg-green-300"}
+                  color={bgAccent}
+                  textColor={textAccent}
+                />
+              ))
+            : console.log(results)}
 
           <View style={tailwind("flex h-6")} />
         </ScrollView>
