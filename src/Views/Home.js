@@ -8,14 +8,13 @@ import {
 } from "react-native";
 import tailwind from "tailwind-rn";
 import Svg, { Path } from "react-native-svg";
-import * as ImageManipulator from "expo-image-manipulator";
 import * as FileSystem from "expo-file-system";
 import * as ImagePicker from "expo-image-picker";
 import * as tf from "@tensorflow/tfjs";
 import { decodeJpeg } from "@tensorflow/tfjs-react-native";
 import { Camera } from "expo-camera";
-import { WIDTH } from "./constants";
-import { ModelContext } from "./ModelContext";
+import { WIDTH } from "../constants";
+import { ModelContext } from "../ModelContext";
 
 export default function Home() {
   // COMPONENT VARIABLES
@@ -64,22 +63,23 @@ export default function Home() {
     try {
       if (!loading) {
         setStatus(() => "Resizing photo...");
-        const { uri } = await resizePhoto(photo.uri, [244, 244]);
-
         setStatus(() => "Converting to tensor3D...");
-        const imgB64 = await FileSystem.readAsStringAsync(uri, {
+        const imgB64 = await FileSystem.readAsStringAsync(photo.uri, {
           encoding: FileSystem.EncodingType.Base64,
         });
         const imgBuffer = tf.util.encodeString(imgB64, "base64").buffer;
         const raw = new Uint8Array(imgBuffer);
-        const tensor = decodeJpeg(raw);
+        const tensor = decodeJpeg(raw, 3);
 
         setStatus(() => "Classifying...");
-        const prediction = await model.classify(tensor);
+        tensor_reshaped = tf.reshape(tensor, [-1, 224, 224, 3]);
+        tensor_float = tf.cast(tensor_reshaped, 'float32');
+        tensor_normalized = tf.div(tensor_float, 255.0);
+        let prediction = await model.predict(tensor_normalized);
         return prediction;
       }
     } catch (e) {
-      console.log(e);
+      console.log("error getting prediction: ", e)
     }
   };
 
@@ -87,7 +87,7 @@ export default function Home() {
     await ImagePicker.requestCameraPermissionsAsync();
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
+      allowsEditing: false,
       aspect: [1, 1],
       quality: 1,
       base64: true,
@@ -103,7 +103,7 @@ export default function Home() {
     await ImagePicker.requestCameraPermissionsAsync();
     let result = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
+      allowsEditing: false,
       aspect: [1, 1],
       quality: 1,
       base64: true,
@@ -127,15 +127,6 @@ export default function Home() {
       };
       await cam.current.takePictureAsync(options);
     }
-  };
-
-  const resizePhoto = async (uri, size) => {
-    const actions = [{ resize: { width: size[0], height: size[1] } }];
-    const saveOptions = {
-      base64: true,
-      format: ImageManipulator.SaveFormat.JPEG,
-    };
-    return await ImageManipulator.manipulateAsync(uri, actions, saveOptions);
   };
 
   return (
@@ -331,7 +322,7 @@ export default function Home() {
             </Text>
           </View>
 
-          {results.map(({ className, probability }, idx) => (
+          {results ? results.map(({ className, probability }, idx) => (
             <ResultItem
               key={`result-${idx}`}
               name={className}
@@ -340,7 +331,7 @@ export default function Home() {
               color={bgAccent}
               textColor={textAccent}
             />
-          ))}
+          )): <Text> No result! </Text>}
 
           <View style={tailwind("flex h-6")} />
         </ScrollView>
