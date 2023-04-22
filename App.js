@@ -5,8 +5,7 @@ import { Dimensions, Text, View, ScrollView } from "react-native";
 import CameraView from "./Views/Camera";
 import HomeView from "./Views/Home";
 import { useRef, useState, useEffect } from "react";
-// import { NavigationContainer } from "@react-navigation/native";
-// import { createStackNavigator } from "@react-navigation/stack";
+import BaseTemplate from "./Views/BaseTemplate";
 
 const { width, height } = Dimensions.get("window");
 
@@ -30,8 +29,12 @@ export default function App() {
       }}
       horizontal
     >
-      <CameraView />
-      <HomeView />
+      <BaseTemplate>
+        <CameraView />
+      </BaseTemplate>
+      <BaseTemplate>
+        <HomeView />
+      </BaseTemplate>
     </ScrollView>
   );
 }
