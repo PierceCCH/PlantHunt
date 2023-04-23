@@ -75,6 +75,9 @@ export default function App() {
           <Tab.Screen name="Camera 📷" component={CameraView} />
           <Tab.Screen name="Home" component={HomeView} />
           <Tab.Screen name="Log 📒" component={LogView} />
+          {/* TEMP FOR TESTING PURPOSES */}
+          <Tab.Screen name="Login" component={LoginView} />
+          <Tab.Screen name="Sign Up" component={SignupView} />
         </Tab.Navigator>
       </NavigationContainer>
     </View>
