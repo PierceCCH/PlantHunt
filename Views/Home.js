@@ -62,7 +62,8 @@ const HomeView = ({navigation}) => {
                 
                 data={user && currPlants && currPlants.length > 0 ? currPlants: ["No Plants Collected yet"]}
                 renderItem={({item}) => <ListItem data={user ? item : "Plant X"} />}
-                keyExtractor={item => item.id}
+                keyExtractor={item => item.id
+                }
               />
             
             </SafeAreaView>
