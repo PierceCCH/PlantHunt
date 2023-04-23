@@ -17,7 +17,7 @@ const BaseHeader = (props) => {
         flexDirection: "row",
       }}
     >
-      <View style={{ marginTop: "10%", marginLeft: "32%" }}>
+      <View style={{ marginTop: "10%"}}>
         <Text
           style={{
             color: "white",
@@ -27,16 +27,6 @@ const BaseHeader = (props) => {
           {" "}
           plant hunt 🌿
         </Text>
-      </View>
-
-      <View
-        style={{ backgroundColor: "gray", marginLeft: "5%", marginTop: "10%" }}
-      >
-        <Button
-          onPress={props.onClickAdventure}
-          color="white"
-          title="Adventure"
-        ></Button>
       </View>
     </View>
   );

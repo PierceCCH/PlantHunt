@@ -1,18 +1,19 @@
 import React, {useState} from "react";
-import { Text, View, Dimensions, SafeAreaView, FlatList } from "react-native";
-import { Avatar } from "react-native-paper";
+import { Text, View, Dimensions, SafeAreaView, FlatList, Button} from "react-native";
+import { Avatar, TextInput } from "react-native-paper";
 
 const { width, height } = Dimensions.get("window");
-const HomeView = () => {
+const HomeView = ({navigation}) => {
 
   const [user, setUser] = useState(null)
+  const [roomID, setRoomID] = useState("")
 
   const ListItem = ({data}) => (
     <View style={styles.listItem}>
       <Text style={styles.h1}>{data}</Text>
     </View>
   );
-
+  
   return (
     <View style={styles.container}>
         <View style={styles.profileContainer}>
@@ -21,17 +22,17 @@ const HomeView = () => {
           </View>
           <View style={styles.statsAndWelcomeContainer}>
             <Text style={styles.h1}>Welcome, {user ? user.name : "Zinc"}</Text>
-            <View>
-              <View style={styles.statsBox}>
-                <Text style={styles.h2}>Stats</Text>
-                <Text style={styles.h3}>
-                  {user ? user.plants : 0} / 2000 Collected
-                </Text>
-                <Text>
-                  {user ? user.adventureCount : 0} total adventures
-                </Text>
-              </View>
+            <View style={styles.statsBox}>
+              <Text style={styles.h2}>Stats</Text>
+              <Text style={styles.h3}>
+                {user ? user.plants : 0} / 2000 Collected
+              </Text>
+              <Text>
+                {user ? user.adventureCount : 0} total adventures
+              </Text>
             </View>
+            <TextInput onChangeText={(text)=>setRoomID(text)} placeholder="Join a room 🥾" style={styles.roomInput} keyboardType= 'numeric'/>
+            <Button title="Create adventure room" onPress={navigation.navigate("Adventure Mode")}/>
           </View>
         </View>
         <View style={styles.collectionContainer}>
@@ -60,14 +61,14 @@ const styles = {
     },
     profileContainer: {
         width: width,
-        height: height * 0.45,
+        height: height * 0.55,
         flex: 1,
         flexDirection: "row",
         justifyContent: "center"
     },
     collectionContainer: {
         width: width,
-        height: height * 0.50,
+        height: height * 0.40,
         justifyContent: "center",
         alignItems: "center"
     },
@@ -100,6 +101,11 @@ const styles = {
         backgroundColor: "grey",
         borderRadius: 20,
         marginBottom: 20,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    roomInput: {
+      backgroundColor: "white"
     },
     safeArea: {
       borderRadius: 20,

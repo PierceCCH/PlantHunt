@@ -63,7 +63,7 @@ export default function App() {
     <ModelProvider>
       <View style={{ flex: 1 }}>
         <NavigationContainer style={styles.container}>
-          <BaseHeader onClickAdventure={updateAdventureMode} />
+          <BaseHeader/>
           {isAdventureMode ? (
             <Stack.Navigator>
               <Stack.Screen name="Adventure Mode" component={AdventureView} />
@@ -86,7 +86,7 @@ export default function App() {
               tabBarPosition="bottom"
             >
               <Tab.Screen name="Camera 📷" component={CameraView} />
-              <Tab.Screen name="Home" component={HomeView} />
+              <Tab.Screen name="Home" component={HomeView}/>
               <Tab.Screen name="Log 📒" component={LogView} />
               {/* TEMP FOR TESTING PURPOSES */}
               <Tab.Screen name="Login" component={LoginView} />
