@@ -1,5 +1,12 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { View, Button, Image, Text, TouchableOpacity, ScrollView } from "react-native";
+import {
+  View,
+  Button,
+  Image,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import tailwind from "tailwind-rn";
 import Svg, { Path } from "react-native-svg";
 import * as ImageManipulator from "expo-image-manipulator";
@@ -12,7 +19,7 @@ import { WIDTH } from "./constants";
 import { ModelContext } from "./ModelContext";
 // import { Button } from "react-native-web";
 
-export default function Home({navigation}) {
+export default function Home({ navigation }) {
   // COMPONENT VARIABLES
   const [photo, setPhoto] = useState();
   const [status, setStatus] = useState("Waiting for image...");
@@ -311,11 +318,7 @@ export default function Home({navigation}) {
             </View>
           </View>
 
-          <View
-            style={tailwind(
-              `flex flex-row justify-center py-2 rounded`
-            )}
-          >
+          <View style={tailwind(`flex flex-row justify-center py-2 rounded`)}>
             <Text
               style={tailwind(
                 `flex content-center text-center border-r border-gray-400 font-bold ${textColor}`
@@ -337,13 +340,18 @@ export default function Home({navigation}) {
               ))
             : console.log(results)}
 
-          <View style={tailwind("flex h-6  items-center border-solid")} />
-          <View
-            style={tailwind(
-              "bg-green-900 w-1/2 text-center text-white items-center justify-center font-bold py-2 px-4 rounded-full"
-            )}
-          >
-            <Button title="Log" color="#ffffff" onPress={() => console.log("h")}></Button>
+          <View style={tailwind("flex h-6  items-center border-solid h-2/3")}>
+            <View
+              style={tailwind(
+                "bg-green-900 w-1/2 text-center text-white items-center justify-center font-bold py-2 px-4 rounded-full"
+              )}
+            >
+              <Button
+                title="Log"
+                color="#ffffff"
+                onPress={() => console.log("h")}
+              ></Button>
+            </View>
           </View>
         </ScrollView>
       </View>

@@ -5,6 +5,7 @@ import { Dimensions, Text, View, ScrollView } from "react-native";
 import CameraView from "./Views/Camera";
 import HomeView from "./Views/Home";
 import { useRef, useState, useEffect } from "react";
+import LogView from "./Views/Log";
 // import { NavigationContainer } from "@react-navigation/native";
 // import { createStackNavigator } from "@react-navigation/stack";
 
@@ -32,6 +33,7 @@ export default function App() {
     >
       <CameraView />
       <HomeView />
+      <LogView />
     </ScrollView>
   );
 }
