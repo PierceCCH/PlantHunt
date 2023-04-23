@@ -4,7 +4,7 @@ import tailwind from "tailwind-rn";
 import LogEntry from "../src/LogEntry";
 
 const { width, height } = Dimensions.get("window");
-const HomeView = () => {
+const LogView = () => {
   return (
     <View
       style={{
@@ -34,4 +34,4 @@ const HomeView = () => {
   );
 };
 
-export default HomeView;
+export default LogView;
