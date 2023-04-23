@@ -1,6 +1,5 @@
 import React from "react";
 import { Text, View, Dimensions } from "react-native";
-import tailwind from "tailwind-rn";
 import LogEntry from "../src/LogEntry";
 
 const { width, height } = Dimensions.get("window");
@@ -20,7 +19,7 @@ const LogView = () => {
         <Text
           style={{
             fontWeight: "bold",
-            fontSize: "24",
+            fontSize: 24,
             marginBottom: '5%',
           }}
         >

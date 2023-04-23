@@ -22,7 +22,7 @@ const BaseHeader = () => {
     >
       <Text style={{
         color: 'white',
-        fontSize: '24',
+        fontSize: 24,
         marginTop: '10%',
       }}> plant hunt 🌿</Text>
     </View>

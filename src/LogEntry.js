@@ -10,7 +10,7 @@ const LogEntry = (props) => {
           backgroundColor: "#236F21",
           // alignItems: 'center',
           // justifyContent: 'center',
-          borderRadius: "15",
+          borderRadius: 15,
           display: "flex",
           marginBottom: '5%',
         }}
@@ -22,7 +22,7 @@ const LogEntry = (props) => {
           <Text style={{ 
             color: "white",
             fontWeight: "bold",
-            fontSize: '24',
+            fontSize: 24,
             }}>{props.date}</Text>
         </View>
         <View style={{
@@ -32,7 +32,7 @@ const LogEntry = (props) => {
           <Text style={{
             color: "white",
             fontWeight: "bold",
-            fontSize: '24',
+            fontSize: 24,
             }}>{props.time}</Text>
         </View>
         <View style={{
@@ -41,7 +41,7 @@ const LogEntry = (props) => {
         }}>
           <Text style={{
             color: "white",
-            fontSize: '18',
+            fontSize: 18,
             }}>{props.location}</Text>
         </View>
         <View style={{
@@ -50,7 +50,7 @@ const LogEntry = (props) => {
         }}>
           <Text style={{
             color: "white",
-            fontSize: '18',
+            fontSize: 18,
             }}>{props.plants_scanned} plants scanned</Text>
         </View>
       </View>
