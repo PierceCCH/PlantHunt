@@ -1,8 +1,8 @@
 import React, { useState, useEffect, createContext } from "react";
 import * as tf from "@tensorflow/tfjs";
 import {bundleResourceIO} from '@tensorflow/tfjs-react-native'
-import modelJSON from "../assets/model/model.json";
-import modelWeights from "../assets/model/modelWeights.bin";
+import modelJSON from "../assets/new_model/model.json";
+import modelWeights from "../assets/new_model/modelWeights.bin";
 
 export const ModelContext = createContext();
 

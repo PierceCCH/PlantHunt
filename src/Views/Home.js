@@ -69,12 +69,13 @@ export default function Home() {
         });
         const imgBuffer = tf.util.encodeString(imgB64, "base64").buffer;
         const raw = new Uint8Array(imgBuffer);
-        const tensor = decodeJpeg(raw, 3);
+        const tensor = decodeJpeg(raw);
 
         setStatus(() => "Classifying...");
-        tensor_reshaped = tf.reshape(tensor, [-1, 224, 224, 3]);
+        tensor_reshaped = tf.reshape(tensor, [1, 224, 224, 3]);
         tensor_float = tf.cast(tensor_reshaped, 'float32');
         tensor_normalized = tf.div(tensor_float, 255.0);
+        console.log("tensor_float: ", tensor_float)
         let prediction = await model.predict(tensor_normalized);
         return prediction;
       }
