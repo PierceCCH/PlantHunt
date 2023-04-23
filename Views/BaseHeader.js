@@ -1,26 +1,43 @@
 //BUILD UPON THIS TEMPLATE
 import React from "react";
-import { Text, View, Dimensions } from "react-native";
+import { Text, View, Dimensions, Button } from "react-native";
 
-const { width } = Dimensions.get("window");
-
-const BaseHeader = () => {
+const { width, height } = Dimensions.get("window");
+//VERY HARDCODED ALIGNMENTS
+const BaseHeader = (props) => {
   return (
     <View
       style={{
         width: width,
-        paddingBottom: '-50%',
+        paddingBottom: "-50%",
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "green",
         flex: 0.125,
+        flexDirection: "row",
       }}
     >
-      <Text style={{
-        color: 'white',
-        fontSize: 24,
-        marginTop: '10%',
-      }}> plant hunt 🌿</Text>
+      <View style={{ marginTop: "10%", marginLeft: "32%" }}>
+        <Text
+          style={{
+            color: "white",
+            fontSize: 24,
+          }}
+        >
+          {" "}
+          plant hunt 🌿
+        </Text>
+      </View>
+
+      <View
+        style={{ backgroundColor: "gray", marginLeft: "5%", marginTop: "10%" }}
+      >
+        <Button
+          onPress={props.onClickAdventure}
+          color="white"
+          title="Adventure"
+        ></Button>
+      </View>
     </View>
   );
 };

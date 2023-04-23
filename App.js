@@ -11,12 +11,19 @@ import { NavigationContainer } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 import LogView from "./Views/Log";
 import { createStackNavigator } from "@react-navigation/stack";
+import AdventureView from "./Views/Adventure";
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
 
 export default function App() {
   const [isLoggedIn, setLogIn] = useState(false);
+  const [isAdventureMode, setAdventureMode] = useState(false);
+
+  const updateAdventureMode = () => {
+    console.log("switching to Adventure Mode");
+    setAdventureMode(!isAdventureMode);
+  };
 
   const styles = StyleSheet.create({
     container: {
@@ -45,7 +52,7 @@ export default function App() {
               name="Login"
               component={LoginView}
               initialParams={{ setLogIn: setLogIn }}
-              />
+            />
             <Stack.Screen name="Signup" component={SignupView} />
           </Stack.Navigator>
         </NavigationContainer>
@@ -56,30 +63,36 @@ export default function App() {
     <ModelProvider>
       <View style={{ flex: 1 }}>
         <NavigationContainer style={styles.container}>
-          <BaseHeader />
-          <Tab.Navigator
-            screenOptions={{ tabBarStyle: { backgroundColor: "green" } }}
-            tabBarOptions={{
-              activeTintColor: "blue",
-              inactiveTintColor: "gray",
-              labelStyle: {
-                fontSize: 16,
-                fontWeight: "bold",
-              },
-              style: {
-                backgroundColor: "white",
-              },
-            }}
-            initialRouteName="Home"
-            tabBarPosition="bottom"
+          <BaseHeader onClickAdventure={updateAdventureMode} />
+          {isAdventureMode ? (
+            <Stack.Navigator>
+              <Stack.Screen name="Adventure Mode" component={AdventureView} />
+            </Stack.Navigator>
+          ) : (
+            <Tab.Navigator
+              screenOptions={{ tabBarStyle: { backgroundColor: "green" } }}
+              tabBarOptions={{
+                activeTintColor: "blue",
+                inactiveTintColor: "gray",
+                labelStyle: {
+                  fontSize: 16,
+                  fontWeight: "bold",
+                },
+                style: {
+                  backgroundColor: "white",
+                },
+              }}
+              initialRouteName="Home"
+              tabBarPosition="bottom"
             >
-            <Tab.Screen name="Camera 📷" component={CameraView} />
-            <Tab.Screen name="Home" component={HomeView} />
-            <Tab.Screen name="Log 📒" component={LogView} />
-            {/* TEMP FOR TESTING PURPOSES */}
-            <Tab.Screen name="Login" component={LoginView} />
-            <Tab.Screen name="Sign Up" component={SignupView} />
-          </Tab.Navigator>
+              <Tab.Screen name="Camera 📷" component={CameraView} />
+              <Tab.Screen name="Home" component={HomeView} />
+              <Tab.Screen name="Log 📒" component={LogView} />
+              {/* TEMP FOR TESTING PURPOSES */}
+              <Tab.Screen name="Login" component={LoginView} />
+              <Tab.Screen name="Sign Up" component={SignupView} />
+            </Tab.Navigator>
+          )}
         </NavigationContainer>
       </View>
     </ModelProvider>
