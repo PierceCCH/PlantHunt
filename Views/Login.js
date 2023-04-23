@@ -9,6 +9,12 @@ import {
   StyleSheet,
   Dimensions,
 } from "react-native";
+import { auth, provider } from "../firebase-config";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "@firebase/auth";
 
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -32,6 +38,17 @@ const LoginView = ({ navigation, route }) => {
   // Function to handle sign-up button press
   const handleLogin = () => {
     console.log("Logging in...");
+
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
+
     route.params.setLogIn(true);
   };
 
