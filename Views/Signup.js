@@ -36,6 +36,7 @@ const SignupView = ({ navigation }) => {
 
   const handleRegister = () => {
     console.log("Registering...");
+  };
   const handleSignUp = () => {
     // Code to handle sign-up process
     const auth = getAuth();
