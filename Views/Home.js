@@ -4,6 +4,8 @@ import { Avatar, TextInput } from "react-native-paper";
 import {auth, firebaseConfig} from '../firebase-config.js' // db, auth, provider, app, 
 
 import {getPlants} from "../src/backend.js"
+import { foundPlants } from "./Camera.js";
+import { ScrollView } from "react-native-web";
 
 const { width, height } = Dimensions.get("window");
 const HomeView = ({navigation}) => {
@@ -19,9 +21,10 @@ const HomeView = ({navigation}) => {
       const plants = await getPlants('7FwPhxuKgSkJYQQBGxv9')
       setPlants(plants)
       //console.log(plants)
+      console.log(foundPlants)
     };
     fetchPlants();
-  }, []);
+  }, foundPlants);
 
   const user = auth.currentUser;
 
@@ -43,7 +46,7 @@ const HomeView = ({navigation}) => {
               <View style={styles.statsBox}>
                 <Text style={styles.h2}>Stats</Text>
                 <Text style={styles.h3}>
-                  {user ? user.plants : 0} / 2000 Collected
+                  {user ? foundPlants.length : 0} / 2000 Collected
                 </Text>
                 <Text>
                   {user ? user.adventureCount : 0} total adventures
@@ -59,9 +62,9 @@ const HomeView = ({navigation}) => {
             {/* <TextInput style={{borderWidth: 2, width: width*0.6, borderRadius: 25, padding: 5}}> 🔎 search... </TextInput> */}
             <SafeAreaView style={styles.safeArea}>
               <FlatList
-                
-                data={user && currPlants && currPlants.length > 0 ? currPlants: ["No Plants Collected yet"]}
-                renderItem={({item}) => <ListItem data={user ? item : "Plant X"} />}
+               
+                data={user && foundPlants ? foundPlants: ["No plants found"]}
+                renderItem={({item}) => <ListItem data={user ? item : "Helianthus"} />}
                 keyExtractor={item => item.id
                 }
               />

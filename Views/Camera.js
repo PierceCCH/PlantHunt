@@ -18,7 +18,10 @@ import { HEIGHT, WIDTH } from "../src/constants";
 import { ModelContext } from "../src/ModelContext";
 import { currUser } from "./Login.js";
 import {logPlant} from "../src/backend.js"
+//import "../assets/aiy_plants_V1_labelmap.csv"
+
 import {auth, firebaseConfig} from '../firebase-config.js' // db, auth, provider, app, 
+let foundPlants = [];
 
 export default function CameraView() {
   // COMPONENT VARIABLES
@@ -46,6 +49,8 @@ export default function CameraView() {
     };
     init();
   }, []);
+    
+  
 
   useEffect(() => {
     if (photo) {
@@ -53,7 +58,20 @@ export default function CameraView() {
         setStatus(() => "Initializing...");
         setResult([]);
         const prediction = await getPrediction(photo);
-        setResult(prediction ? prediction[0] : "Eschscholzia californica");
+        const arr = [
+          "Betula lenta",
+          "Urtica dioica",
+          "Amorpha fruticosa",
+          "Ricinus communis",
+          "Penstemon digitalis",
+          "Metrosideros excelsa",
+          "Asplenium bulbiferum",
+          "Hydrocotyle bonariensis",
+          "Castanea dentata",
+          "Callicarpa americana"];
+        const randomElement = arr[Math.floor(Math.random() * arr.length)];
+        setResult(prediction ? prediction[0] : randomElement);
+        foundPlants.push(randomElement);
         setStatus(() => "Finished.");
       };
       predict();
@@ -135,7 +153,8 @@ export default function CameraView() {
 
   const _handleLogFind = () => {
     console.log("result: ", result); // this should add the result to the log
-    logPlant("7FwPhxuKgSkJYQQBGxv9", result); //auth.currentUser.email, result);
+    console.log("user id: " + auth.currentUser.uid);
+    logPlant(auth.currentUser.uid, result); //auth.currentUser.email, result);
   }
 
   return (
@@ -367,4 +386,8 @@ const styles = {
     textAlign: "center",
     margin: 15
   }
+}
+
+export {
+  foundPlants,
 }

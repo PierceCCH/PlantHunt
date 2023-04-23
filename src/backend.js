@@ -41,9 +41,38 @@ const app = firebase.initializeApp(firebaseConfig);
 // ========================== Write: User Found a Plant ===========================
 async function logPlant(userID, plantName) 
 {
+
+  //userID = "aOvYVOE9XUSJcjCriC73dtVf4vn2"
+  console.log("OG UID: " + userID);
+
+  const currUser = db.collection('users')
+    
+  currUser.where('uid', '==', userID)
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        console.log(doc.id, " => ", doc.data());
+      });
+    })
+    .catch((error) => {
+      console.error("Error getting users: ", error);
+  });
+
   
+
+  /*
+  collectionRef.where('uid', '==', userID).get()
+    .then(snapshot => {
+      snapshot.forEach(doc => {
+        console.log("Doc: " + JSON.stringify(doc));
+      });
+    })
+    .catch(err => {
+      console.error('Error finding user: ', err);
+    });
+  */
+
   userID = "7FwPhxuKgSkJYQQBGxv9";
-  let user = auth.currentUser;
   const userRef = doc(db, "users", userID);
   console.log("UserID: " + userID + "\nPlant: " + plantName)
 
