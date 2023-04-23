@@ -1,5 +1,5 @@
 import React from "react";
-import Home from "./src/Home";
+import Home from "./src/Views/Home";
 import { ModelProvider } from "./src/ModelContext";
 import { Dimensions, Text, View, ScrollView } from "react-native";
 import CameraView from "./Views/Camera";
