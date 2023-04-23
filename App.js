@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import { ModelProvider } from "./src/ModelContext";
-import { Dimensions, Text, View, ScrollView } from "react-native";
+import { Dimensions, View } from "react-native";
 import CameraView from "./Views/Camera";
 import HomeView from "./Views/Home";
 import BaseHeader from "./Views/BaseHeader";
@@ -8,7 +8,6 @@ import LoginView from "./Views/Login";
 import SignupView from "./Views/Signup";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-const { width, height } = Dimensions.get("window");
 import { StyleSheet } from "react-native";
 import LogView from "./Views/Log";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -64,7 +63,7 @@ export default function App() {
     <ModelProvider>
       <View style={{ flex: 1 }}>
         <NavigationContainer style={styles.container}>
-          <BaseHeader onClickAdventure={updateAdventureMode} />
+          <BaseHeader/>
           {isAdventureMode ? (
             <Stack.Navigator>
               <Stack.Screen name="Adventure Mode" component={AdventureView} />
@@ -87,7 +86,7 @@ export default function App() {
               tabBarPosition="bottom"
             >
               <Tab.Screen name="Camera 📷" component={CameraView} />
-              <Tab.Screen name="Home" component={HomeView} />
+              <Tab.Screen name="Home" component={HomeView}/>
               <Tab.Screen name="Log 📒" component={LogView} />
               {/* TEMP FOR TESTING PURPOSES */}
               <Tab.Screen name="Login" component={LoginView} />
