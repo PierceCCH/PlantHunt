@@ -20,7 +20,7 @@ const AdventureView = () => {
         <Text
           style={{
             fontWeight: "bold",
-            fontSize: "24",
+            fontSize: 24,
             marginBottom: "5%",
           }}
         >
