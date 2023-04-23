@@ -4,12 +4,23 @@ import {
   ScrollView,
   View,
   Text,
+  TextInput,
   TouchableOpacity,
   Dimensions,
 } from "react-native";
 
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { app, auth, db} from '../firebase-config.js' // db, auth, provider, app, 
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { collection, addDoc } from "firebase/firestore";
+import { StyleSheet } from "react-native";
+
+// import LoginSVG from '../assets/images/misc/login.svg'
+// import GoogleSVG from '../assets/images/misc/google.svg';
+// import FacebookSVG from '../assets/images/misc/facebook.svg';
+// import TwitterSVG from '../assets/images/misc/twitter.svg';
+
 import CustomButton from "../src/components/CustomButton";
 import InputField from "../src/components/InputField";
 
@@ -21,28 +32,51 @@ const SignupView = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const handleNameChange = (value) => {
+    //setName(value);
+    console.log("name value: " + value)
+  };
+
   // Function to handle sign-up button press
   const handleLogin = () => {
     navigation.navigate("Login");
   };
 
-  const handleRegister = () => {
-    console.log("Registering...");
-  };
-  const handleSignUp = () => {
+  const handleRegister = async => {
     // Code to handle sign-up process
-    const auth = getAuth();
+    alert("Signed Up Successfully!");
+    console.log("User Signed Up!");
+    
+    
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        // ...
+        navigation.navigate("Login");
+        // Save user data to Firestore
+        
+        const usersRef = collection(db, "users");
+
+        addDoc(usersRef, {
+          uid: user.uid,
+          name: name,
+          email: email,
+          password: password,
+          plants: [],
+        })
+        .then((docRef) => {
+          console.log("Document written with ID: ", docRef.id);
+        })
+        .catch((error) => {
+          console.error("Error adding document: ", error);
+        });
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        // ..
+        console.log("Error: " + error)
       });
+      
   };
 
   return (
@@ -79,41 +113,28 @@ const SignupView = ({ navigation }) => {
             Welcome to PlantHunt!
           </Text>
 
-          <InputField
-            label={"Full Name"}
-            icon={
-              <Ionicons
-                name="person-outline"
-                size={20}
-                color="#666"
-                style={{ marginRight: 5 }}
-              />
-            }
-          />
-          <InputField
-            label={"Email ID"}
-            icon={
-              <MaterialIcons
-                name="alternate-email"
-                size={20}
-                color="#666"
-                style={{ marginRight: 5 }}
-              />
-            }
-            keyboardType="email-address"
-          />
-          <InputField
-            label={"Password"}
-            icon={
-              <Ionicons
-                name="ios-lock-closed-outline"
-                size={20}
-                color="#666"
-                style={{ marginRight: 5 }}
-              />
-            }
-            inputType="password"
-          />
+            
+          <View style={styles.inputContainer}>
+            <TextInput
+              placeholder="Name"
+              value={name}
+              onChangeText={text => setName(text)}
+              style={styles.input}
+            />
+            <TextInput
+              placeholder="Email"
+              value={email}
+              onChangeText={text => setEmail(text)}
+              style={styles.input}
+            />
+            <TextInput
+              placeholder="Password"
+              value={password}
+              onChangeText={text => setPassword(text)}
+              style={styles.input}
+              secureTextEntry
+            />
+          </View>
 
           <CustomButton label={"Register"} onPress={handleRegister} />
 
@@ -126,5 +147,56 @@ const SignupView = ({ navigation }) => {
     </SafeAreaView>
   );
 };
+
+
+const styles = StyleSheet.create({
+  container: {
+    width: width,
+    height: height,
+    justifyContent: "center",
+    alignItems: "center",
+    marginHorizontal: 0,
+  },
+  inputContainer: {
+    width: '80%'
+  },
+  input: {
+    backgroundColor: 'white',
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 10,
+    marginTop: 5,
+    marginBottom: 5,
+  },
+  buttonContainer: {
+    width: '60%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 40,
+  },
+  button: {
+    backgroundColor: '#0782F9',
+    width: '100%',
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  buttonOutline: {
+    backgroundColor: 'white',
+    marginTop: 5,
+    borderColor: '#0782F9',
+    borderWidth: 2,
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: '700',
+    fontSize: 16,
+  },
+  buttonOutlineText: {
+    color: '#0782F9',
+    fontWeight: '700',
+    fontSize: 16,
+  },
+})
 
 export default SignupView;

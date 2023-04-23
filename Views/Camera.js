@@ -16,6 +16,9 @@ import { decodeJpeg } from "@tensorflow/tfjs-react-native";
 import { Camera } from "expo-camera";
 import { HEIGHT, WIDTH } from "../src/constants";
 import { ModelContext } from "../src/ModelContext";
+import { currUser } from "./Login.js";
+import {logPlant} from "../src/backend.js"
+import {auth, firebaseConfig} from '../firebase-config.js' // db, auth, provider, app, 
 
 export default function CameraView() {
   // COMPONENT VARIABLES
@@ -132,6 +135,7 @@ export default function CameraView() {
 
   const _handleLogFind = () => {
     console.log("result: ", result); // this should add the result to the log
+    logPlant("7FwPhxuKgSkJYQQBGxv9", result); //auth.currentUser.email, result);
   }
 
   return (

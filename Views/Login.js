@@ -4,7 +4,9 @@ import {
   ScrollView,
   View,
   Text,
+  TextInput,
   TouchableOpacity,
+  StyleSheet,
   Dimensions,
 } from "react-native";
 import { auth, provider } from "../firebase-config";
@@ -16,6 +18,8 @@ import {
 
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { SignIn } from "../src/backend.js";
+import { NavigationContainer, useNavigation} from "@react-navigation/native";
 
 // import LoginSVG from '../assets/images/misc/login.svg'
 // import GoogleSVG from '../assets/images/misc/google.svg';
@@ -24,8 +28,10 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 
 import CustomButton from "../src/components/CustomButton";
 import InputField from "../src/components/InputField";
+import { Button } from "react-native-paper";
 
 const { width, height } = Dimensions.get("window");
+let currUser;
 
 const LoginView = ({ navigation, route }) => {
   // State variables for the user's name, email, and password
@@ -36,18 +42,20 @@ const LoginView = ({ navigation, route }) => {
   // Function to handle sign-up button press
   const handleLogin = () => {
     console.log("Logging in...");
-
+    
     const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
+        currUser = user;
+        alert("Logged In!")
+        navigation.navigate("Home"); 
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
       });
-
-    route.params.setLogIn(true);
+      route.params.setLogIn(true);
   };
 
   const handleSignup = () => {
@@ -78,6 +86,7 @@ const LoginView = ({ navigation, route }) => {
               color: "#333",
               marginBottom: 30,
             }}
+            
           >
             Login
           </Text>
@@ -88,31 +97,21 @@ const LoginView = ({ navigation, route }) => {
             Welcome to PlantHunt!
           </Text>
 
-          <InputField
-            label={"Email ID"}
-            icon={
-              <MaterialIcons
-                name="alternate-email"
-                size={20}
-                color="#666"
-                style={{ marginRight: 5 }}
-              />
-            }
-            keyboardType="email-address"
-          />
-
-          <InputField
-            label={"Password"}
-            icon={
-              <Ionicons
-                name="ios-lock-closed-outline"
-                size={20}
-                color="#666"
-                style={{ marginRight: 5 }}
-              />
-            }
-            inputType="password"
-          />
+          <View style={styles.inputContainer}>
+            <TextInput
+              placeholder="Email"
+              value={email}
+              onChangeText={text => setEmail(text)}
+              style={styles.input}
+            />
+            <TextInput
+              placeholder="Password"
+              value={password}
+              onChangeText={text => setPassword(text)}
+              style={styles.input}
+              secureTextEntry
+            />
+          </View>
 
           <CustomButton label={"Login"} onPress={handleLogin} />
 
@@ -123,6 +122,7 @@ const LoginView = ({ navigation, route }) => {
               Sign Up
             </Text>
           </TouchableOpacity>
+
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -130,3 +130,57 @@ const LoginView = ({ navigation, route }) => {
 };
 
 export default LoginView;
+
+export {
+  currUser,
+}
+
+const styles = StyleSheet.create({
+  container: {
+    width: width,
+    height: height,
+    justifyContent: "center",
+    alignItems: "center",
+    marginHorizontal: 0,
+  },
+  inputContainer: {
+    width: '80%'
+  },
+  input: {
+    backgroundColor: 'white',
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 10,
+    marginTop: 5,
+    marginBottom: 5,
+  },
+  buttonContainer: {
+    width: '60%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 40,
+  },
+  button: {
+    backgroundColor: '#0782F9',
+    width: '100%',
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  buttonOutline: {
+    backgroundColor: 'white',
+    marginTop: 5,
+    borderColor: '#0782F9',
+    borderWidth: 2,
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: '700',
+    fontSize: 16,
+  },
+  buttonOutlineText: {
+    color: '#0782F9',
+    fontWeight: '700',
+    fontSize: 16,
+  },
+})

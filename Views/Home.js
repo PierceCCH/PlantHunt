@@ -1,12 +1,29 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { Text, View, Dimensions, SafeAreaView, FlatList, Button} from "react-native";
 import { Avatar, TextInput } from "react-native-paper";
+import {auth, firebaseConfig} from '../firebase-config.js' // db, auth, provider, app, 
+
+import {getPlants} from "../src/backend.js"
 
 const { width, height } = Dimensions.get("window");
 const HomeView = ({navigation}) => {
 
-  const [user, setUser] = useState(null)
   const [roomID, setRoomID] = useState("")
+  const [currPlants, setPlants] = useState([])
+
+  //const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    const fetchPlants = async () => {
+      console.log("Getting plants...")
+      const plants = await getPlants('7FwPhxuKgSkJYQQBGxv9')
+      setPlants(plants)
+      //console.log(plants)
+    };
+    fetchPlants();
+  }, []);
+
+  const user = auth.currentUser;
 
   const ListItem = ({data}) => (
     <View style={styles.listItem}>
@@ -21,18 +38,20 @@ const HomeView = ({navigation}) => {
             <Avatar.Image size={144} source={require('../assets/images/matt.jpg')} />
           </View>
           <View style={styles.statsAndWelcomeContainer}>
-            <Text style={styles.h1}>Welcome, {user ? user.name : "Zinc"}</Text>
-            <View style={styles.statsBox}>
-              <Text style={styles.h2}>Stats</Text>
-              <Text style={styles.h3}>
-                {user ? user.plants : 0} / 2000 Collected
-              </Text>
-              <Text>
-                {user ? user.adventureCount : 0} total adventures
-              </Text>
+            <Text style={styles.h1}>Welcome, {user ? auth.currentUser.email : "Not Logged In"}</Text>
+            <View>
+              <View style={styles.statsBox}>
+                <Text style={styles.h2}>Stats</Text>
+                <Text style={styles.h3}>
+                  {user ? user.plants : 0} / 2000 Collected
+                </Text>
+                <Text>
+                  {user ? user.adventureCount : 0} total adventures
+                </Text>
+              </View>
             </View>
             <TextInput onChangeText={(text)=>setRoomID(text)} placeholder="Join a room 🥾" style={styles.roomInput} keyboardType= 'numeric'/>
-            <Button title="Create adventure room" onPress={navigation.navigate("Adventure Mode")}/>
+            <Button title="Create adventure room" onPress={() => console.log()}/>
           </View>
         </View>
         <View style={styles.collectionContainer}>
@@ -40,10 +59,12 @@ const HomeView = ({navigation}) => {
             {/* <TextInput style={{borderWidth: 2, width: width*0.6, borderRadius: 25, padding: 5}}> 🔎 search... </TextInput> */}
             <SafeAreaView style={styles.safeArea}>
               <FlatList
-                data={user ? user.plants : ["Plant X", "Plant Y", "Plant Z", "Plant A", "Plant B", "Plant C", "Plant D"]}
-                renderItem={({item}) => <ListItem data={user ? user.plants : "Plant X"} />}
+                
+                data={user && currPlants && currPlants.length > 0 ? currPlants: ["No Plants Collected yet"]}
+                renderItem={({item}) => <ListItem data={user ? item : "Plant X"} />}
                 keyExtractor={item => item.id}
               />
+            
             </SafeAreaView>
         </View>
     </View>
