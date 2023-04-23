@@ -12,26 +12,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import CustomButton from '../src/components/CustomButton';
 import InputField from '../src/components/InputField';
 
-import { Client, Account } from "appwrite";
-
-const client = new Client();
-
-const account = new Account(client);
-
-client
-    .setEndpoint('http://localhost/v1') // Your API Endpoint
-    .setProject('644408dee637e4940bce') // Your project ID
-;
-
-// const promise = account.create(name, email, password);
-
-// promise.then(function (response) {
-//     console.log(response); // Success
-// }, function (error) {
-//     console.log(error); // Failure
-// });
-
-
 const { width, height } = Dimensions.get("window");
 
 const LoginView = () => {
