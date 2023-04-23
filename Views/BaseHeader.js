@@ -13,13 +13,14 @@ const BaseHeader = () => {
     <View
       style={{
         width: width,
+        padding: 10,
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "green",
-        flex: 0.2,
+        flex: 0.2
       }}
     >
-      <Text> PLANT HUNT 🌿</Text>
+      <Text style={{fontSize: 30, fontWeight: 'bold'}}> PLANT HUNT 🌿</Text>
     </View>
   );
 };
