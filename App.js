@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState } from "react";
 import Home from "./src/Views/Home";
 import { ModelProvider } from "./src/ModelContext";
 import { Dimensions, Text, View, ScrollView } from "react-native";
@@ -12,10 +12,14 @@ import { NavigationContainer } from "@react-navigation/native";
 const { width, height } = Dimensions.get("window");
 import { StyleSheet } from "react-native";
 import LogView from "./Views/Log";
+import { createStackNavigator } from "@react-navigation/stack";
 
 const Tab = createMaterialTopTabNavigator();
+const Stack = createStackNavigator();
 
 export default function App() {
+  const [isLoggedIn, setLogIn] = useState(false);
+
   const styles = StyleSheet.create({
     container: {
       backgroundColor: "#fff",
@@ -33,6 +37,21 @@ export default function App() {
       elevation: 5,
     },
   });
+
+  if (!isLoggedIn) {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen
+            name="Login"
+            component={LoginView}
+            initialParams={{ setLogIn: setLogIn }}
+          />
+          <Stack.Screen name="Signup" component={SignupView} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  }
   return (
     <View style={{ flex: 1 }}>
       <NavigationContainer style={styles.container}>
