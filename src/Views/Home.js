@@ -1,11 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import {
-  View,
-  Image,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import { View, Image, Text, TouchableOpacity, ScrollView } from "react-native";
 import tailwind from "tailwind-rn";
 import Svg, { Path } from "react-native-svg";
 import * as FileSystem from "expo-file-system";
@@ -73,14 +67,14 @@ export default function Home() {
 
         setStatus(() => "Classifying...");
         tensor_reshaped = tf.reshape(tensor, [1, 224, 224, 3]);
-        tensor_float = tf.cast(tensor_reshaped, 'float32');
+        tensor_float = tf.cast(tensor_reshaped, "float32");
         tensor_normalized = tf.div(tensor_float, 255.0);
-        console.log("tensor_float: ", tensor_float)
+        console.log("tensor_float: ", tensor_float);
         let prediction = await model.predict(tensor_normalized);
         return prediction;
       }
     } catch (e) {
-      console.log("error getting prediction: ", e)
+      console.log("error getting prediction: ", e);
     }
   };
 
@@ -135,9 +129,7 @@ export default function Home() {
       {/* Header */}
 
       {/* Content */}
-      <View
-        style={tailwind("flex flex-1")}
-      >
+      <View style={tailwind("flex flex-1")}>
         <View style={[tailwind("flex p-2"), { width: WIDTH, height: WIDTH }]}>
           {photo ? (
             <Image
@@ -323,16 +315,20 @@ export default function Home() {
             </Text>
           </View>
 
-          {results ? results.map(({ className, probability }, idx) => (
-            <ResultItem
-              key={`result-${idx}`}
-              name={className}
-              probability={probability}
-              //   color={idx % 2 === 0 ? "bg-red-300" : "bg-green-300"}
-              color={bgAccent}
-              textColor={textAccent}
-            />
-          )): <Text> No result! </Text>}
+          {results ? (
+            results.map(({ className, probability }, idx) => (
+              <ResultItem
+                key={`result-${idx}`}
+                name={className}
+                probability={probability}
+                //   color={idx % 2 === 0 ? "bg-red-300" : "bg-green-300"}
+                color={bgAccent}
+                textColor={textAccent}
+              />
+            ))
+          ) : (
+            <Text> No result! </Text>
+          )}
 
           <View style={tailwind("flex h-6")} />
         </ScrollView>

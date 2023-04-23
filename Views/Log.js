@@ -2,7 +2,7 @@ import React from "react";
 import { Text, View, Dimensions } from "react-native";
 
 const { width, height } = Dimensions.get("window");
-const HomeView = () => {
+const LogView = () => {
   return (
     <View
       style={{
@@ -12,9 +12,9 @@ const HomeView = () => {
         alignItems: "center",
       }}
     >
-      <Text>HOMEVIEW YEET!</Text>
+      <Text>LOG YOUR PLANS!</Text>
     </View>
   );
 };
 
-export default HomeView;
+export default LogView;
