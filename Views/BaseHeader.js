@@ -1,12 +1,8 @@
 //BUILD UPON THIS TEMPLATE
 import React from "react";
-import { Text, View, Dimensions, Button, ScrollView } from "react-native";
-import { TouchableOpacity } from "react-native";
-import tailwind from "tailwind-rn";
-import { useState } from "react";
-import NavigationContainer from "@react-navigation/native";
+import { Text, View, Dimensions } from "react-native";
 
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 
 const BaseHeader = () => {
   return (

@@ -4,20 +4,12 @@ import {
   ScrollView,
   View,
   Text,
-  TextInput,
   TouchableOpacity,
-  StyleSheet,
   Dimensions,
 } from "react-native";
 
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
-
-// import LoginSVG from '../assets/images/misc/login.svg'
-// import GoogleSVG from '../assets/images/misc/google.svg';
-// import FacebookSVG from '../assets/images/misc/facebook.svg';
-// import TwitterSVG from '../assets/images/misc/twitter.svg';
-
 import CustomButton from "../src/components/CustomButton";
 import InputField from "../src/components/InputField";
 
@@ -98,7 +90,6 @@ const SignupView = ({ navigation }) => {
               />
             }
           />
-
           <InputField
             label={"Email ID"}
             icon={
@@ -111,7 +102,6 @@ const SignupView = ({ navigation }) => {
             }
             keyboardType="email-address"
           />
-
           <InputField
             label={"Password"}
             icon={

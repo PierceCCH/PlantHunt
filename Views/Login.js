@@ -4,9 +4,7 @@ import {
   ScrollView,
   View,
   Text,
-  TextInput,
   TouchableOpacity,
-  StyleSheet,
   Dimensions,
 } from "react-native";
 import { auth, provider } from "../firebase-config";

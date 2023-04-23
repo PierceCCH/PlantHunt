@@ -53,7 +53,6 @@ export default function CameraView() {
         setResult(prediction ? prediction[0] : "Eschscholzia californica");
         setStatus(() => "Finished.");
       };
-
       predict();
     } else {
       setStatus("Waiting for image...");
@@ -130,6 +129,10 @@ export default function CameraView() {
       await cam.current.takePictureAsync(options);
     }
   };
+
+  const _handleLogFind = () => {
+    console.log("result: ", result); // this should add the result to the log
+  }
 
   return (
     <View style={tailwind(`flex flex-1 ${bgColor}`)}>
@@ -308,7 +311,7 @@ export default function CameraView() {
               </Text>
             </View>
           </View>
-          <View style={{height: HEIGHT*0.4}}>
+          <View style={{height: HEIGHT*0.1}}>
             {result.length > 0 ? (
               <Text style={styles.resultText}>
                 You found: {result}
@@ -316,19 +319,14 @@ export default function CameraView() {
             ) : <></>}
           </View>
           <View style={tailwind("flex h-2/3 items-center border-solid")}>
-            <View
-              style={tailwind(
-                "bg-green-900 w-1/2 text-center text-white items-center justify-center font-bold py-2 px-4 rounded-full"
-              )}
-            >
-              {result.length > 0 ? (
-                <Button
-                  title="LOG FIND!"
-                  color="#ffffff"
-                  onPress={() => console.log("h")}
-                ></Button>
+            {result.length > 0 ? (
+              <Button
+                title="LOG FIND!"
+                color="green"
+                onPress={() => _handleLogFind()}
+                style={{height: 50, padding: 15}}
+              ></Button>
             ) : <></>}
-            </View>
           </View>
         </ScrollView>
       </View>

@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { Text, View, Dimensions, SafeAreaView, FlatList } from "react-native";
-import { TextInput } from "react-native-gesture-handler";
+import { Avatar } from "react-native-paper";
 
 const { width, height } = Dimensions.get("window");
 const HomeView = () => {
@@ -17,9 +17,7 @@ const HomeView = () => {
     <View style={styles.container}>
         <View style={styles.profileContainer}>
           <View style={styles.avatar}> 
-            <Text>
-              Avatar 
-            </Text>
+            <Avatar.Image size={144} source={require('../assets/images/matt.jpg')} />
           </View>
           <View style={styles.statsAndWelcomeContainer}>
             <Text style={styles.h1}>Welcome, {user ? user.name : "Zinc"}</Text>
@@ -38,7 +36,7 @@ const HomeView = () => {
         </View>
         <View style={styles.collectionContainer}>
             <Text style={styles.h1}> Collection </Text>
-            <TextInput style={{borderWidth: 2, width: width*0.6, borderRadius: 25, padding: 5}}> 🔎 search... </TextInput>
+            {/* <TextInput style={{borderWidth: 2, width: width*0.6, borderRadius: 25, padding: 5}}> 🔎 search... </TextInput> */}
             <SafeAreaView style={styles.safeArea}>
               <FlatList
                 data={user ? user.plants : ["Plant X", "Plant Y", "Plant Z", "Plant A", "Plant B", "Plant C", "Plant D"]}
@@ -92,13 +90,9 @@ const styles = {
     avatar: {
         width: width * 0.30,
         height: height * 0.15,
-        backgroundColor: "grey",
-        borderRadius: 100,
-        alignItems: "center",
-        justifyContent: "center",
-        marginTop: "auto",
         marginBottom: "auto",
-        marginLEft: 10,
+        marginTop: "auto",
+        paddingLeft: 10,
     },
     listItem: {
         width: width * 0.8,
