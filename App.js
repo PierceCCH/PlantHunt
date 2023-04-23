@@ -1,8 +1,12 @@
 import React from "react";
+import Home from "./src/Views/Home";
+import { ModelProvider } from "./src/ModelContext";
 import { Dimensions, Text, View, ScrollView } from "react-native";
 import CameraView from "./Views/Camera";
 import HomeView from "./Views/Home";
 import BaseHeader from "./Views/BaseHeader";
+import LoginView from "./Views/Login";
+import SignupView from "./Views/Signup";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 const { width, height } = Dimensions.get("window");
