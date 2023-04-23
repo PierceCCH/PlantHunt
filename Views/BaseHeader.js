@@ -7,24 +7,41 @@ import { useState } from "react";
 import NavigationContainer from "@react-navigation/native";
 
 const { width, height } = Dimensions.get("window");
-
-const BaseHeader = () => {
+//VERY HARDCODED ALIGNMENTS
+const BaseHeader = (props) => {
   return (
     <View
       style={{
         width: width,
-        paddingBottom: '-50%',
+        paddingBottom: "-50%",
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "green",
         flex: 0.125,
+        flexDirection: "row",
       }}
     >
-      <Text style={{
-        color: 'white',
-        fontSize: '24',
-        marginTop: '10%',
-      }}> plant hunt 🌿</Text>
+      <View style={{ marginTop: "10%", marginLeft: "32%" }}>
+        <Text
+          style={{
+            color: "white",
+            fontSize: "24",
+          }}
+        >
+          {" "}
+          plant hunt 🌿
+        </Text>
+      </View>
+
+      <View
+        style={{ backgroundColor: "gray", marginLeft: "5%", marginTop: "10%" }}
+      >
+        <Button
+          onPress={props.onClickAdventure}
+          color="white"
+          title="Adventure"
+        ></Button>
+      </View>
     </View>
   );
 };
