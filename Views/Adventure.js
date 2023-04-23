@@ -26,7 +26,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  info: { ...containers, flex: 1 },
+  info: {
+    ...containers,
+    justifyContent: "space-between",
+    flex: 1,
+    flexWrap: "wrap",
+    flexDirection: "row",
+  },
   leaderboard: {
     ...containers,
     flex: 2,
@@ -34,9 +40,15 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginLeft: "10%",
     marginRight: "10%",
+    justifyContent: "flex-start",
   },
   myCollectionHeader: { ...containers, flex: 0.5 },
-  myCollection: { ...containers, flex: 4, backgroundColor: "green" },
+  myCollection: {
+    ...containers,
+    flex: 4,
+    backgroundColor: "green",
+    justifyContent: "flex-start",
+  },
 });
 const AdventureView = () => {
   return (
@@ -52,16 +64,19 @@ const AdventureView = () => {
         }}
       >
         <View style={styles.info}>
-          <Text>Info</Text>
+          <Text style={{ marginLeft: "5%" }}>
+            Date and Time{"\n"}04/23/2023, 09:12:22
+          </Text>
+          <Text style={{ marginRight: "5%" }}>Group Code{"\n"}a0s2m</Text>
         </View>
         <View style={styles.leaderboard}>
-          <Text>Leaderboard</Text>
+          <Text style={{ margin: "5%" }}>Leaderboard</Text>
         </View>
         <View style={styles.myCollectionHeader}>
           <Text>My Collection</Text>
         </View>
         <View style={styles.myCollection}>
-          <Text>Insert Grid of Plants here</Text>
+          <Text style={{ margin: "5%" }}>Insert Grid of Plants here</Text>
         </View>
       </View>
     </SafeAreaView>
