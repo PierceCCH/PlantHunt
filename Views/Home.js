@@ -7,7 +7,7 @@ const HomeView = () => {
     <View
       style={{
         width: width,
-        height: height,
+        height: height, //idk why this realigns it
         justifyContent: "center",
         alignItems: "center",
       }}
